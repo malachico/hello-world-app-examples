@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World Frontend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello from Frontend!</h1>
+        <p>This is a simple HTML page served by our backend.</p>
+        <p id="backend-message"></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/hello')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('backend-message').textContent = `Message from Backend: "${data}"`;
+                })
+                .catch(error => {
+                    document.getElementById('backend-message').textContent = `Error fetching from backend: ${error}`;
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        });
+    </script>
+</body>
+</html>
